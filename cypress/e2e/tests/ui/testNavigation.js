@@ -7,11 +7,10 @@ const registration_page = new RegistrationPage()
 describe('Test navigation', () => {
     before(() => {
         cy.visit(`${baseUrl}/register.htm`)
-        registration_page.fillForm()
-        registration_page.clickRegisterButton()
+        registration_page.login()
     });
 
     it('Go to Open New Account page', () => {
-        // cy.visit('') 
+        // cy.visit('')
     });
 });
