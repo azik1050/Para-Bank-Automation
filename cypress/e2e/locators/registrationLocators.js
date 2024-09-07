@@ -1,18 +1,24 @@
 export const RegistrationPageLocators = {
-    form: {
-        firstName: '#customer.firstName',
-        lastName: '#customer\.lastName',
-        address: '#customer\.address\.street',
-        city: '#customer\.address\.city',
-        state: '#customer\.address\.state',
-        zipCode: '#customer\.address\.zipCode',
-        phone: '#customer\.phoneNumber',
-        ssn: '#customer\.ssn',
-        username: '#customer\.ssn',
-        password: '#customer\.password',
-        _confirm: '#repeatedPassword'
+    registration_form: {
+        firstName: '[name="customer.firstName"]',
+        lastName: '[name="customer.lastName"]',
+        address: '[name="customer.address.street"]',
+        city: '[name="customer.address.city"]',
+        state: '[name="customer.address.state"]',
+        zipCode: '[name="customer.address.zipCode"]',
+        phone: '[name="customer.phoneNumber"]',
+        ssn: '[name="customer.ssn"]',
+        username: '[name="customer.username"]', 
+        password: '[name="customer.password"]',
+        _confirm: '[name="repeatedPassword"]'
     },
-    
 
+    login_form: {
+        username: '[name="username"]',
+        password: '[name="password"]'
+    },
+
+    loginButton: '[value="Log In"]',
+    
     registerButton: '[colspan="2"] > .button'
 }

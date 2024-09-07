@@ -23,3 +23,9 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('highlight', { prevSubject: 'element' }, (subject) => {
+    cy.wrap(subject).then($el => {
+      $el.css('border', '2px solid red');
+    });
+  });
