@@ -9,9 +9,13 @@ module.exports = defineConfig({
 		video: true,
 		screenshotOnRunFailure: true,
 		retries: {
-			runMode: 2,
-			openMode: 2
+			runMode: 0,
+			openMode: 0
 		},
-		specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx,feature}"
+		specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
+		excludeSpecPattern: [
+			'**/e2e/locators/**',
+			'**/e2e/pages/**'
+		]	  
   	},
 });
