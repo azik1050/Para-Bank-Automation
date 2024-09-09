@@ -4,23 +4,23 @@ import { AccountServicesPage } from "../../pages/accountServicesPage";
 import { EachPagesHeader } from "../../pages/eachPagesHeaders";
 
 const baseUrl = 'https://parabank.parasoft.com/parabank'
-const auth = new Authentication('Azimjon3', 'Azimjon')
+const auth = new Authentication('Azimjon690', 'Azimjon')
 const accounts_page = new AccountServicesPage()
 const headers = new EachPagesHeader()
 
 var count = 0
 
 describe('Test navigation', () => {
-    // before(() => {
-    //     cy.visit(`${baseUrl}/register.htm`)
-    //     auth.register()
-    // });
+    before(() => {
+        cy.visit(`${baseUrl}/register.htm`)
+        auth.register()
+    });
 
     beforeEach(() => {
-        // if (count) {
+        if (count) {
             cy.visit(`${baseUrl}/register.htm`)
             auth.login()
-        // }
+        }
     });
 
     it('Go to "Open New Account" page', () => {
@@ -81,12 +81,6 @@ describe('Test navigation', () => {
     });
 
     afterEach(() => {
-        // cy.intercept('GET', '/parabank/services_proxy/bank/customers/*/accounts', {
-        //     statusCode: 200,
-        //     body: {
-        //         accounts: [] // Provide a mock response body
-        //     }
-        // }).as('getAccounts')
         cy.wait(2000)   
         cy.get('#rightPanel').highlight()
         cy.screenshot(`Navigation Page ${count}`)
