@@ -1,6 +1,8 @@
 import { OpenNewAccountLocators as locators } from "../locators/openNewAccountLocators"
 
 export class OpenNewAccountPage {
+    new_account = null
+
     getAccountTypeButton() {
         return cy.get(locators.accountTypeButton)
     }

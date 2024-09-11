@@ -2,21 +2,23 @@ import { Authentication } from "../../pages/registrationPage";
 import { AccountServicesPage } from "../../pages/accountServicesPage";
 import { OpenNewAccountPage } from "../../pages/openNewAccountPage";
 import { AccountsOverviewPage } from "../../pages/accountsOverviewPage";
+import { TransferFundsPage } from "../../pages/transferFundsPage";
 
 const baseUrl = 'https://parabank.parasoft.com/parabank'
-const auth = new Authentication('bf', 'Azimjon')
+const auth = new Authentication('1hytht212', 'Azimjon')
 const accounts_page = new AccountServicesPage()
 const newAccount_page = new OpenNewAccountPage()
 const accountsOverview_page = new AccountsOverviewPage()
+const transferFunds_page = new TransferFundsPage()
 
 var registered = false
 
 describe('Test Funds Transfer', () => {
-    before(() => {
-        cy.visit(`${baseUrl}/register.htm`)
-        auth.register()
-        registered = true
-    });
+    // before(() => {
+    //     cy.visit(`${baseUrl}/register.htm`)
+    //     auth.register()
+    //     registered = true
+    // });
 
     beforeEach(() => {
         if (!registered) {
@@ -29,12 +31,19 @@ describe('Test Funds Transfer', () => {
         accounts_page.getAccountsOverviewLink().click()
 
         accountsOverview_page.getAccountNumberHeader()
-        .should('be', 'number')
-        .then((number) => {
-            cy.log(number)
+        .then((element) => {
+            accountsOverview_page.accountNumber = element.text()
         })
-        cy.log(accountsOverview_page.accountNumber)
-        newAccount_page.getFromAccountIdButton().select('')
+
+        accounts_page.getOpenNewAccountLink().click()
+
+        newAccount_page.new_account = newAccount_page.getFromAccountIdButton().find('option')
         newAccount_page.getOpenNewAccountButton().click()
+
+        accounts_page.getTransferFundsLink().click()
+
+        transferFunds_page.extractAccounts()
+        cy.log(transferFunds_page.accounts) // it logs everything
+        transferFunds_page.getFromAccountDropdown().select(transferFunds_page.accounts[1])
     });
 });
