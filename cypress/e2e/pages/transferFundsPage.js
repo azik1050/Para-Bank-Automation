@@ -15,10 +15,8 @@ export class TransferFundsPage {
     }
 
     extractAccounts() {
-        this.getFromAccountDropdown().find('option').each(($option) => {
+        return this.getFromAccountDropdown().find('option').each(($option) => {
             this.accounts.push($option.text());
-        }).then(() => {
-            cy.log('Accounts:', this.accounts.join(', '));
-        });
+        })
     }
 }

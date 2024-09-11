@@ -83,7 +83,7 @@ describe('Test navigation', () => {
     afterEach(() => {
         cy.wait(2000)   
         cy.get('#rightPanel').highlight()
-        cy.screenshot(`Navigation Page ${count}`)
+        // cy.screenshot(`Navigation Page ${count}`)
         count += 1
     });
 });
