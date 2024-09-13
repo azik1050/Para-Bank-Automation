@@ -7,5 +7,7 @@ export const AccountServicesPageLocators = {
         findTransactions: '#leftPanel > ul > :nth-child(5) > a',
         updateContactInfo: '#leftPanel > ul > :nth-child(6) > a',
         requestLoan: '#leftPanel > ul > :nth-child(7) > a'
-    }
+    },
+
+    contactLink: '.contact'
 }

@@ -25,9 +25,8 @@ describe('Test Funds Transfer', () => {
             cy.visit(`${baseUrl}/register.htm`)
             auth.login()    
         }
-    });
 
-    it('Make a correct transaction', () => {
+        // Navidation process
         accounts_page.getAccountsOverviewLink().click()
 
         accountsOverview_page.getAccountNumberHeader() // get current account number
@@ -42,16 +41,25 @@ describe('Test Funds Transfer', () => {
 
         accounts_page.getTransferFundsLink().click()
 
+        transferFunds_page.getAmountField().type('0') // make a transfer from new to current
+    });
 
-        transferFunds_page.getAmountField().type('12') // make a transfer from new to current
+    it('Choose a correct transaction', () => {
         transferFunds_page.extractAccounts().then(() => {
             transferFunds_page.getFromAccountDropdown().select(transferFunds_page.accounts[1])
         })
-        transferFunds_page.getTransferButton().click()
+    });
+
+    it('Choose an incorrect transaction', () => {
+        transferFunds_page.extractAccounts().then(() => {
+            transferFunds_page.getFromAccountDropdown().select(transferFunds_page.accounts[0])
+        })
     });
 
     afterEach(() => {
-        cy.get('#rightPanel').highlight()
+        transferFunds_page.getTransferButton().click()
+        cy.wait(2000)
+        cy.get('').highlight()
         cy.screenshot(`Transaction`)
     })
 });

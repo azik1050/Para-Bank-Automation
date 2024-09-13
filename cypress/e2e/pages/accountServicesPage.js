@@ -28,4 +28,8 @@ export class AccountServicesPage {
     getRequestLoanLink() {
         return cy.get(locators.links.requestLoan);
     }
+
+    getContactLink() {
+        return cy.get(locators.contactLink)
+    }
 }
