@@ -1,31 +1,19 @@
-import { Authentication } from "../../pages/registrationPage";
 import { AccountServicesPage } from "../../pages/accountServicesPage";
 import { OpenNewAccountPage } from "../../pages/openNewAccountPage";
 import { AccountsOverviewPage } from "../../pages/accountsOverviewPage";
 import { TransferFundsPage } from "../../pages/transferFundsPage";
+import { SuccessPanelPage } from "../../pages/successPanelPage";
 
-const baseUrl = 'https://parabank.parasoft.com/parabank'
-const auth = new Authentication('1hytht212', 'Azimjon')
 const accounts_page = new AccountServicesPage()
 const newAccount_page = new OpenNewAccountPage()
 const accountsOverview_page = new AccountsOverviewPage()
 const transferFunds_page = new TransferFundsPage()
+const successPanel_page = new SuccessPanelPage()
 
 var registered = false
 
 describe('Test Funds Transfer', () => {
-    // before(() => {
-    //     cy.visit(`${baseUrl}/register.htm`)
-    //     auth.register()
-    //     registered = true
-    // });
-
     beforeEach(() => {
-        if (!registered) {
-            cy.visit(`${baseUrl}/register.htm`)
-            auth.login()    
-        }
-
         // Navidation process
         accounts_page.getAccountsOverviewLink().click()
 
@@ -42,24 +30,29 @@ describe('Test Funds Transfer', () => {
         accounts_page.getTransferFundsLink().click()
 
         transferFunds_page.getAmountField().type('0') // make a transfer from new to current
+        registered = false
     });
 
     it('Choose a correct transaction', () => {
         transferFunds_page.extractAccounts().then(() => {
             transferFunds_page.getFromAccountDropdown().select(transferFunds_page.accounts[1])
         })
+        transferFunds_page.getTransferButton().click()
+        successPanel_page.getStatusHeader()
+        .should('contain.text', 'Transfer Complete!')
     });
 
     it('Choose an incorrect transaction', () => {
         transferFunds_page.extractAccounts().then(() => {
             transferFunds_page.getFromAccountDropdown().select(transferFunds_page.accounts[0])
         })
+        transferFunds_page.getTransferButton().click()
+        successPanel_page.getStatusHeader()
+        .should('not.contain.text', 'Transfer Complete!')
     });
 
     afterEach(() => {
-        transferFunds_page.getTransferButton().click()
-        cy.wait(2000)
-        cy.get('').highlight()
+        successPanel_page.getRightPanel().highlight()
         cy.screenshot(`Transaction`)
     })
 });

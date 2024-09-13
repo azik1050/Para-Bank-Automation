@@ -15,6 +15,18 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+import { Authentication } from '../e2e/pages/registrationPage';
+
+const baseUrl = 'https://parabank.parasoft.com/parabank'
+const auth = new Authentication(baseUrl)
+
+beforeEach(() => {
+    auth.authenticate()
+});
+
+after(() => {
+    auth.has_account = false
+});
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

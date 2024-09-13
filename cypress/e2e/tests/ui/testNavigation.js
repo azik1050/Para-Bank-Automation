@@ -1,30 +1,16 @@
 /// <reference types="cypress" />
-import { Authentication } from "../../pages/registrationPage";
 import { AccountServicesPage } from "../../pages/accountServicesPage";
 import { EachPagesHeader } from "../../pages/eachPagesHeaders";
+import { SuccessPanelPage } from "../../pages/successPanelPage";
 
-const baseUrl = 'https://parabank.parasoft.com/parabank'
-const auth = new Authentication('Azimjon690', 'Azimjon')
 const accounts_page = new AccountServicesPage()
 const headers = new EachPagesHeader()
+const successPanel_page = new SuccessPanelPage()
 
 var count = 0
 
 describe('Test navigation', () => {
-    before(() => {
-        cy.visit(`${baseUrl}/register.htm`)
-        auth.register()
-    });
-
-    beforeEach(() => {
-        if (count) {
-            cy.visit(`${baseUrl}/register.htm`)
-            auth.login()
-        }
-    });
-
     it('Go to "Open New Account" page', () => {
-        cy.visit(`${baseUrl}/openaccount.htm`)
         accounts_page.getOpenNewAccountLink()
             .should('contain.text', 'Open New Account')
             .click();
@@ -82,8 +68,8 @@ describe('Test navigation', () => {
 
     afterEach(() => {
         cy.wait(2000)   
-        cy.get('#rightPanel').highlight()
-        // cy.screenshot(`Navigation Page ${count}`)
+        successPanel_page.getRightPanel().highlight()
+        cy.screenshot(`Navigation Page ${count}`)
         count += 1
     });
 });

@@ -2,18 +2,16 @@ import { RegistrationPageLocators as locators } from '../locators/registrationLo
 
 
 export class RegistrationPage {
-    constructor(username, password) {
-        this.firstName = 'A'
-        this.lastName = 'A'
-        this.address = 'A'
-        this.city = 'A'
-        this.state = 'A'
-        this.zipCode = 'A'
-        this.phone = 'A'
-        this.ssn = 'A'
-        this.username = username
-        this.password = password
-    }
+    firstName = 'A'
+    lastName = 'A'
+    address = 'A'
+    city = 'A'
+    state = 'A'
+    zipCode = 'A'
+    phone = 'A'
+    ssn = 'A'
+    username = 'Azimjon'
+    password = 'Azimjon'
 
     clickLoginButton() {
         return cy.get(locators.loginButton).click()
@@ -94,8 +92,11 @@ export class RegistrationPage {
 
 
 export class Authentication extends RegistrationPage {
-    constructor(username, password) {
-        super(username, password)
+    has_account = false
+
+    constructor(baseUrl) {
+        super()
+        this.baseUrl = baseUrl
     }
 
     login() {
@@ -124,5 +125,21 @@ export class Authentication extends RegistrationPage {
         //cy.get('#rightPanel')
         //.highlight()
         //cy.screenshot('Successfully Registered')
+    }
+
+    authenticate() {
+        cy.log(this.baseUrl)
+        cy.visit(`${this.baseUrl}/register.htm`)
+        if (!this.has_account) {
+            this.register()
+        }
+        cy.get('.title').then(($element) => {
+            const text = $element.text()
+            cy.log(text)
+            if (text == 'Signing up is easy!') {
+                this.login()
+                this.has_account = true
+            }
+        })
     }
 }
