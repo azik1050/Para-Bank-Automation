@@ -128,7 +128,6 @@ export class Authentication extends RegistrationPage {
     }
 
     authenticate() {
-        cy.log(this.baseUrl)
         cy.visit(`${this.baseUrl}/register.htm`)
         if (!this.has_account) {
             this.register()

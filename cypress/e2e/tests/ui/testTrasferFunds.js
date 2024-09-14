@@ -12,6 +12,12 @@ const successPanel_page = new SuccessPanelPage()
 
 var registered = false
 
+const shouldRunTests = (tag) => {
+    const envTag = Cypress.env('tag')
+    return !envTag || envTag === tag
+}
+
+
 describe('Test Funds Transfer', () => {
     beforeEach(() => {
         // Navidation process
@@ -33,23 +39,28 @@ describe('Test Funds Transfer', () => {
         registered = false
     });
 
-    it('Choose a correct transaction', () => {
-        transferFunds_page.extractAccounts().then(() => {
-            transferFunds_page.getFromAccountDropdown().select(transferFunds_page.accounts[1])
-        })
-        transferFunds_page.getTransferButton().click()
-        successPanel_page.getStatusHeader()
-        .should('contain.text', 'Transfer Complete!')
-    });
-
-    it('Choose an incorrect transaction', () => {
-        transferFunds_page.extractAccounts().then(() => {
-            transferFunds_page.getFromAccountDropdown().select(transferFunds_page.accounts[0])
-        })
-        transferFunds_page.getTransferButton().click()
-        successPanel_page.getStatusHeader()
-        .should('not.contain.text', 'Transfer Complete!')
-    });
+    if (shouldRunTests('@positive')) {
+        it('Choose a correct transaction', () => {
+            transferFunds_page.extractAccounts().then(() => {
+                transferFunds_page.getFromAccountDropdown().select(transferFunds_page.accounts[1])
+            })
+            transferFunds_page.getTransferButton().click()
+            successPanel_page.getStatusHeader()
+            .should('contain.text', 'Transfer Complete!')
+        });
+    }
+    
+    if (shouldRunTests('@negative')) {
+        it('Choose an incorrect transaction', () => {
+            transferFunds_page.extractAccounts().then(() => {
+                transferFunds_page.getFromAccountDropdown().select(transferFunds_page.accounts[0])
+            })
+            transferFunds_page.getTransferButton().click()
+            successPanel_page.getStatusHeader()
+            .should('not.contain.text', 'Transfer Complete!')
+        });
+    }
+    
 
     afterEach(() => {
         successPanel_page.getRightPanel().highlight()
