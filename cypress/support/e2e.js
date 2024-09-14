@@ -16,6 +16,7 @@
 // Import commands.js using ES2015 syntax:
 /// <reference types="cypress" />
 import './commands'
+import 'cypress-mochawesome-reporter/register';
 import { Authentication } from '../e2e/pages/registrationPage';
 
 const baseUrl = 'https://parabank.parasoft.com/parabank'
