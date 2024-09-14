@@ -15,7 +15,8 @@ module.exports = defineConfig({
 		specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
 		excludeSpecPattern: [
 			'**/e2e/locators/**',
-			'**/e2e/pages/**'
+			'**/e2e/pages/**',
+			'**/e2e/helpers/**',
 		]	  
   	},
 });

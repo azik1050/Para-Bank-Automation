@@ -14,6 +14,7 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
+/// <reference types="cypress" />
 import './commands'
 import { Authentication } from '../e2e/pages/registrationPage';
 
@@ -21,7 +22,16 @@ const baseUrl = 'https://parabank.parasoft.com/parabank'
 const auth = new Authentication(baseUrl)
 
 beforeEach(() => {
-    auth.authenticate()
+    switch (Cypress.currentTest.title) {
+        case 'Add a pet':
+            return
+        case 'Find a pet':
+            return
+        case 'Remove a pet':
+            return
+        default:
+            auth.authenticate()
+    }
 });
 
 after(() => {
